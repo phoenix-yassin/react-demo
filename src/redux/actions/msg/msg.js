@@ -10,13 +10,18 @@ const DEL_MSG = 'DEL_MSG'
 // ================================
 // Action Creator
 // ================================
-const fetchMsg = queryBody => dispatch =>
+
+const fetchMsg = (queryBody) => dispatch =>
   msgService
     .fetch(queryBody)
-    .then(msgs => dispatch({
-      type: FETCH_MSG,
-      payload: msgs
-    }))
+    .then(
+      msg =>
+        dispatch({
+          type: FETCH_MSG,
+          payload: msg
+        })
+    )
+
 
 const addMsg = msgBody => dispatch =>
   msgService
@@ -29,24 +34,31 @@ const addMsg = msgBody => dispatch =>
       return msg
     })
 
-const modMsg = msgBody => dispatch =>
+const modMsg = msgBody => dispatch => (
   msgService
     .mod(msgBody)
-    .then(msg => {
-      dispatch({
-        type: MOD_MSG,
-        payload: msg
-      })
-      return msg // 便于链式调用
-    })
+    .then(
+      msg => {
+        dispatch({
+          type: MOD_MSG,
+          payload: msg
+        })
+        return msg
+      }
+    )
+)
 
 const delMsg = msgId => dispatch =>
   msgService
     .del(msgId)
-    .then(() => dispatch({
-      type: DEL_MSG,
-      payload: msgId
-    }))
+    .then(
+      ()=>{
+        dispatch({
+          type: DEL_MSG,
+          payload: msgId
+        })
+      }
+    )
 
 /* default 导出所有 Action Creators */
 export default {
@@ -59,6 +71,7 @@ export default {
 // 但要把 ActionType 导出又引入实在太麻烦
 // 且在 Reducer 中写 switch-case 实在太不优雅
 // 故在此直接给出处理逻辑
+// type: (state, action.payload) => (xxxx; state)
 // ================================
 export const ACTION_HANDLERS = {
   [FETCH_MSG]: (msgs, { payload }) => payload,

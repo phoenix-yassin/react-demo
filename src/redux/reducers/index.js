@@ -27,7 +27,7 @@ export function createRootReducer() {
 }
 
 /**
- * 按需加载时，立即注入对应的 Reducer
+ * 按需加载时，立即注入对应的 Reducere
  * @param  {String}   key
  * @param  {Function} reducer
  */

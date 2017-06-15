@@ -18,12 +18,12 @@ export default class LogoutDropdown extends Component {
           <a href="javascript:;"
             className="dropdown-toggle"
             data-toggle="dropdown">
-            欢迎您，{ this.props.userData.username }
+            欢迎您1，{ this.props.userData.username }
             <strong className="caret"></strong>
           </a>
           
           <ul className="dropdown-menu">
-            <li onClick={() => this.logout()}>
+            <li onClick={this.logout}>
               <a href="javascript:;">
                 注销登录
               </a>

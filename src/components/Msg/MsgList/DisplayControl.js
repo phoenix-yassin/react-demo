@@ -3,27 +3,37 @@ import { Link } from 'react-router'
 import handleChange from 'MIXIN/handleChange'
 
 export default class DisplayControl extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
-    this.state = { _quantity: props.quantity }
-    this.handleChange = handleChange.bind(this) // mixin
-  }
-
-  /* 【拓展阅读】setState 的“异步”坑：https://zhuanlan.zhihu.com/p/20328570 */
-  componentWillReceiveProps(nextProps) {
-    if (this.state._quantity !== nextProps.quantity) {
-      this.setState({ _quantity: nextProps.quantity })
+    this.handleChange = handleChange.bind(this)
+    this.state = {
+      _quantity: props.quantity
     }
   }
 
-  _changeQuantity () {
+  /* 【拓展阅读】setState 的“异步”坑：https://zhuanlan.zhihu.com/p/20328570 */
+  componentWillReceiveProps(nextPros) {
+    if (this.state._quantity !== nextPros.quantity) {
+      this.setState({
+        _quantity: nextPros.quantity
+      })
+    }
+  }
+/*
+* export default function handleChange(evt) {
+ this.setState({
+ [evt.target.name]: evt.target.value.trim()
+ })
+ }
+* */
+  _changeQuantity() {
     this.props.changeQuantity(this.state._quantity)
   }
 
   render () {
-    let { msgsLen, pageIdx, resetDisplayControl } = this.props
+    let {pageIdx, msgsLen, resetDisplayControl } = this.props
     return (
-      <center>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <form className="form-inline">
           <div className="form-group">
             <div className="input-group">
@@ -71,7 +81,7 @@ export default class DisplayControl extends Component {
             </div>
           </div>
         </form>
-      </center>
+      </div>
     )
   }
 }

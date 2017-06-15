@@ -31,6 +31,13 @@ export default class MsgList extends Component {
     this.updateMsgList(nextDisplayControl)
   }
 
+  selectAll() {
+    const checkboxItems = document.querySelectorAll('ul .checkbox-inline input')
+    checkboxItems.forEach((item) => {
+      item.checked = !item.checked
+    })
+  }
+
   updateMsgList (displayControl = this.props.msg.displayControl) {
     let { pageIdx, quantity, authorSpecified: author } = displayControl
     this.props.fetchMsg({ pageIdx, quantity, author })
@@ -60,6 +67,11 @@ export default class MsgList extends Component {
         <ul className="list-group">
           { msgs.map(msg =>
             <li className="list-group-item" key={msg.id}>
+              <span className="checkbox-inline">
+                <label>
+                  <input type="checkbox" />
+                </label>
+              </span>
               <Link to={`/msg/detail/${msg.id}`}>
                 <b>{ msg.title }</b>
               </Link>
@@ -85,6 +97,12 @@ export default class MsgList extends Component {
             </li>
           )}
         </ul>
+        <span className="checkbox-inline">
+          <label>
+            <input type="checkbox" onChange={this.selectAll.bind(this)} />全选
+          </label>
+        </span>
+        <button className="btn" >删除</button>
       </div>
     )
   }

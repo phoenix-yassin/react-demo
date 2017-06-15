@@ -11,9 +11,9 @@ const RESET_DISPLAY_CONTROL = 'RESET_DISPLAY_CONTROL'
 // ================================
 // Action Creator
 // ================================
-const specifyAuthor = (authorSpecified) => ({
+const specifyAuthor = author => ({
   type: SPECIFY_AUTHOR,
-  payload: authorSpecified
+  payload: author
 })
 
 const goPrevPage = () => ({
@@ -33,11 +33,10 @@ const resetDisplayControl = () => ({
   type: RESET_DISPLAY_CONTROL
 })
 
-/* default 导出所有 Action Creators */
 export default {
-  specifyAuthor, goPrevPage, goNextPage,
-  changeQuantity, resetDisplayControl
+  specifyAuthor, goPrevPage, goNextPage, changeQuantity, resetDisplayControl
 }
+
 
 // ================================
 // Action handlers for Reducer
@@ -47,22 +46,21 @@ export default {
 // 故在此直接给出处理逻辑
 // ================================
 export const ACTION_HANDLERS = {
-  [SPECIFY_AUTHOR]: (displayControl, { payload: authorSpecified }) => (
-    { ...displayControl, authorSpecified }
+  [SPECIFY_AUTHOR]: (displayControl, {payload: author}) => (
+    {...displayControl, author}
   ),
   [PREV_PAGE]: (displayControl, action) => {
     let pageIdx = displayControl.pageIdx
     pageIdx = pageIdx <= 1 ? 1 : pageIdx - 1
-    return { ...displayControl, pageIdx }
+    return {...displayControl, pageIdx}
   },
-  [NEXT_PAGE]: (displayControl, action) => (
-    { ...displayControl, pageIdx: displayControl.pageIdx + 1 }
+  [NEXT_PAGE]: (displayControl, action) => ({
+    ...displayControl, pageIdx: displayControl.pageIdx + 1
+  }),
+  [CHANGE_QUANTITY]: (displayControl, {payload: quantity}) => (
+    {...displayControl, quantity}
   ),
-  [CHANGE_QUANTITY]: (displayControl, { payload: quantity }) => {
-    quantity = ~~quantity || 10
-    return { ...displayControl, quantity }
-  },
   [RESET_DISPLAY_CONTROL]: (displayControl, action) => (
-    { ...initState.msg.displayControl }
+    {...displayControl, ...initState.msg.displayControl}
   )
 }

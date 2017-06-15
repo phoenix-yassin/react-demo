@@ -21,3 +21,14 @@ export default store
 // 增强版 history
 // ======================================================
 export const history = syncHistoryWithStore(store)
+
+/*
+* export default function (store) {
+ return syncHistoryWithStore(
+ browserHistory,
+ store,
+ { selectLocationState: (state) => state.router }
+ )
+ }
+
+ * */
